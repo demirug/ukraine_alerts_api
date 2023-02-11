@@ -11,7 +11,7 @@ def __import_tasks(directory=os.getcwd()):
     """ Recursion searching and importing py files with name tasks.py or task_{any_name}.py """
     for file in os.listdir(directory):
         path = os.path.join(directory, file)
-        if os.path.isdir(path):
+        if os.path.isdir(path) and 'env' not in path:
             __import_tasks(path)
         if re.match("^((tasks)|(task_[aA-zZ0-9_]+)).py$", file):
             # Remove .py extension in registration name
