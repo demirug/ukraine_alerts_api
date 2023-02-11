@@ -1,6 +1,7 @@
 import dotenv
 from celery import Celery
 from flask import Flask
+from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 
 dotenv.load_dotenv()
@@ -9,9 +10,14 @@ from config import Config
 
 db = SQLAlchemy()
 celery = Celery()
+api = Api()
+
 
 def create_app():
     app = create_base_app()
+
+    api.app = app
+    api.init_app(app)
 
     from app.controller import main
     app.register_blueprint(main, url_prefix="")
@@ -23,7 +29,6 @@ def create_app():
 
 
 def create_base_app():
-    global app
     app = Flask(__name__)
     app.config.from_object(Config)
     db.init_app(app)
