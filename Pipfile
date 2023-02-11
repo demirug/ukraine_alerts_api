@@ -10,6 +10,9 @@ python-dotenv = "*"
 webdriver-manager = "*"
 selenium = "*"
 flask-sqlalchemy = "*"
+celery = "*"
+redis = "*"
+eventlet = "*"
 
 [dev-packages]
 
