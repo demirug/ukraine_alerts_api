@@ -13,8 +13,8 @@ flask-sqlalchemy = "*"
 celery = "*"
 redis = "*"
 eventlet = "*"
-flask-restful = "*"
 marshmallow-sqlalchemy = "*"
+flask-restx = "*"
 
 [dev-packages]
 

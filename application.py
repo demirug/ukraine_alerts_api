@@ -1,7 +1,7 @@
 import dotenv
 from celery import Celery
 from flask import Flask
-from flask_restful import Api, Resource
+from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 
 dotenv.load_dotenv()
@@ -16,7 +16,6 @@ api = Api()
 def create_app():
     app = create_base_app()
 
-    api.app = app
     api.init_app(app)
 
     from app.controller import main
