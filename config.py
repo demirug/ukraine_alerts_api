@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 
 class Config:
@@ -13,6 +14,13 @@ class Config:
         'result_backend': f'redis://{REDIS_HOST}:{REDIS_PORT}/0',
         'accept_content': ['application/json'],
         'task_serializer': 'json',
-        'result_serializer': 'json'
+        'result_serializer': 'json',
+
+        'beat_schedule': {
+            'update_alert_info': {
+                'task': 'tasks.update_status',
+                'schedule': timedelta(seconds=30)
+            }
+        }
     }
 
