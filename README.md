@@ -6,7 +6,7 @@ Scrapping information from https://alerts.in.ua and represent data in friendly f
 
 
 ## Installation
-Client is based on `python 3.6`
+Client is based on `python 3.7`
 
 To install dependencies use `pipenv` tool and run `pipenv install`
 
