@@ -1,3 +1,4 @@
+from flask import abort
 from flask_restx import Resource
 from sqlalchemy import func, and_
 
@@ -51,4 +52,6 @@ class RegionStatusList(Resource):
         """
 
         region_status: RegionStatus = RegionStatus.query.filter(RegionStatus.region_id==id).order_by(RegionStatus.timestamp.desc()).first()
+        if region_status is None:
+            abort(404)
         return RegionStatusSchema().dump(region_status)
