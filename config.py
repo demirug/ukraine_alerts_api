@@ -18,7 +18,7 @@ class Config:
 
         'beat_schedule': {
             'update_alert_info': {
-                'task': 'tasks.update_status',
+                'task': 'tasks.update_status_selenium',
                 'schedule': timedelta(seconds=30)
             }
         }

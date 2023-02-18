@@ -1,12 +1,12 @@
 from app.models import Region, RegionStatus
 from app.services import get_or_create
 from application import celery, db
-from scrapping import get_alert_data
+from scrapping import get_alert_data_selenium
 
 
 @celery.task
-def update_status():
-    for data in get_alert_data():
+def update_status_selenium():
+    for data in get_alert_data_selenium():
         region: Region = get_or_create(Region, name=data['name'], create={"is_city": data['is_city']})
 
         last_status: RegionStatus = RegionStatus.query.filter_by(region_id=region.id).order_by(RegionStatus.timestamp.desc()).first()
