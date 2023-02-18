@@ -17,9 +17,14 @@ class Config:
         'result_serializer': 'json',
 
         'beat_schedule': {
-            'update_alert_info': {
+            'update_alert_info_selenium': {
                 'task': 'tasks.update_status_selenium',
-                'schedule': timedelta(seconds=30)
+                'schedule': timedelta(minutes=15)
+            },
+
+            'update_alert_info_api': {
+                'task': 'tasks.update_status_api',
+                'schedule': timedelta(seconds=5)
             }
         }
     }
