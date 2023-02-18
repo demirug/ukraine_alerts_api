@@ -1,10 +1,18 @@
+import os
 import time
 
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
-def get_alert_data(url="https://alerts.in.ua"):
+def get_alert_data_api(url="https://alerts.com.ua/api/states"):
+    res = requests.get(url, headers={"X-API-Key": os.getenv("ALERTS-COM-UA-API-KEY")})
+    if res.status_code != 200:
+        return []
+
+    data = res.json()
+    return [{"name": el['name'].replace(" область", ""), "alert": el['alert'], 'is_city': el['name'].startswith('м.')} for el in data['states']]
 
 
 def get_alert_data_selenium(url="https://alerts.in.ua"):
