@@ -12,6 +12,9 @@ To install dependencies use `pipenv` tool and run `pipenv install`
 
 Required to be installed any chrome webdriver to parse alert data
 
+Set API-KEY for `ALERTS-COM-UA-API-KEY` env. Key you can get from https://alerts.com.ua/.
+Use it to faster data update
+
 ### Setup  .env file
 
 ```
@@ -19,6 +22,8 @@ DEBUG=True
 
 REDIS_HOST=localhost
 REDIS_PORT=6379
+
+ALERTS-COM-UA-API-KEY=your_api_key
 ```
 
 ### Setup celery
