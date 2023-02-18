@@ -19,7 +19,7 @@ def __update_data(data: []):
     Update database with data
     :param data: list of dicts with structure {name: value, is_alert: value, is_city: value}
     """
-    for el in data():
+    for el in data:
         region: Region = get_or_create(Region, name=el['name'], create={"is_city": el['is_city']})
 
         last_status: RegionStatus = RegionStatus.query.filter_by(region_id=region.id).order_by(
