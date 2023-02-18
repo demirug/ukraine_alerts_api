@@ -15,6 +15,7 @@ redis = "*"
 eventlet = "*"
 marshmallow-sqlalchemy = "*"
 flask-restx = "*"
+requests = "*"
 
 [dev-packages]
 
