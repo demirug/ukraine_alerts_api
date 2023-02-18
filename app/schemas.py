@@ -14,3 +14,8 @@ class RegionStatusSchema(SQLAlchemyAutoSchema):
         model = RegionStatus
         fields = ("id", "region_id", "is_alert", "timestamp")
 
+
+class RegionShortStatusSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = RegionStatus
+        fields = ("region_id", "is_alert")

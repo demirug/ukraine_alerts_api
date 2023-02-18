@@ -1,9 +1,9 @@
-from flask import abort
+from flask import abort, request
 from flask_restx import Resource
 from sqlalchemy import func, and_
 
 from app.models import Region, RegionStatus
-from app.schemas import RegionSchema, RegionStatusSchema
+from app.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
 from application import db, api
 
 
@@ -40,6 +40,8 @@ class RegionStatusList(Resource):
         regions = RegionStatus.query.join(stmt, and_(RegionStatus.region_id == stmt.c.region_id,
                                                      RegionStatus.timestamp == stmt.c.timestamp)).all()
 
+        if 'short' in request.args:
+            return RegionShortStatusSchema(many=True).dump(regions)
         return RegionStatusSchema(many=True).dump(regions)
 
 
@@ -54,4 +56,7 @@ class RegionStatusList(Resource):
         region_status: RegionStatus = RegionStatus.query.filter(RegionStatus.region_id==id).order_by(RegionStatus.timestamp.desc()).first()
         if region_status is None:
             abort(404)
+        if 'short' in request.args:
+            return RegionShortStatusSchema().dump(region_status)
         return RegionStatusSchema().dump(region_status)
+
