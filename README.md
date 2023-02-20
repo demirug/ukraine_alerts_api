@@ -47,7 +47,7 @@ At root page displaying swagger
 ### Get regions list
 
 
-    curl -X 'GET' 'http://127.0.0.1:5000/regions' -H 'accept: application/json'
+    curl -X 'GET' 'http://127.0.0.1:5000/api/regions' -H 'accept: application/json'
 
 #### Response
 
@@ -73,7 +73,7 @@ At root page displaying swagger
 ### Get all region statuses
 
 
-    curl -X 'GET' 'http://127.0.0.1:5000/status' -H 'accept: application/json'
+    curl -X 'GET' 'http://127.0.0.1:5000/api/status' -H 'accept: application/json'
 
 #### Response
 
@@ -101,7 +101,7 @@ At root page displaying swagger
 ### Get region status by region id
 
 
-    curl -X 'GET' 'http://127.0.0.1:5000/status/1' -H 'accept: application/json'
+    curl -X 'GET' 'http://127.0.0.1:5000/api/status/1' -H 'accept: application/json'
 
 #### Response
 
