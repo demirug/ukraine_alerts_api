@@ -26,3 +26,13 @@ class RegionStatus(db.Model):
     timestamp = sq.Column(sq.DateTime, default=datetime.utcnow)
 
     region: Mapped["Region"] = sq.orm.relationship('Region', back_populates="statuses")
+
+
+class CallbackClient(db.Model):
+    id = sq.Column(sq.Integer, primary_key=True)
+    url = sq.Column(sq.String, nullable=False)
+    signature = sq.Column(sq.String, nullable=False)
+    email = sq.Column(sq.String, nullable=False)
+    enable = sq.Column(sq.Boolean, default=False)
+    timestamp = sq.Column(sq.DateTime, default=datetime.utcnow)
+

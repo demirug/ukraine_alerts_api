@@ -2,8 +2,8 @@ from flask import abort, request
 from flask_restx import Resource
 from sqlalchemy import func, and_
 
-from app.models import Region, RegionStatus
-from app.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
+from api.models import Region, RegionStatus
+from api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
 from application import db, api
 
 

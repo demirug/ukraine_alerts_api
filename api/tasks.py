@@ -1,5 +1,9 @@
-from app.models import Region, RegionStatus
-from app.services import get_or_create
+import requests
+from requests import ReadTimeout, ConnectTimeout
+
+from api.models import Region, RegionStatus, CallbackClient
+from api.schemas import RegionStatusSchema
+from api.services import get_or_create
 from application import celery, db
 from scrapping import get_alert_data_selenium, get_alert_data_api
 
@@ -12,6 +16,20 @@ def update_status_api():
 @celery.task
 def update_status_selenium():
     __update_data(get_alert_data_selenium())
+
+
+@celery.task
+def inform_callback_clients(region_status_id):
+    obj = RegionStatus.query.get(region_status_id)
+    if obj is None:
+        return
+
+    json_data = RegionStatusSchema().dump(obj)
+    for client in CallbackClient.query.filter_by(enable=True):
+        try:
+            requests.post(client.url, json=json_data, headers={"X-API-Key": client.signature}, timeout=1)
+        except (ReadTimeout, ConnectTimeout):
+            pass
 
 
 def __update_data(data: []):
@@ -30,3 +48,5 @@ def __update_data(data: []):
 
             db.session.add(status)
             db.session.commit()
+
+            inform_callback_clients.delay(status.id)

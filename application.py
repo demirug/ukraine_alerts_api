@@ -16,9 +16,10 @@ api = Api()
 def create_app():
     app = create_base_app()
 
-    from app.controller import main
-    api.init_app(main)
-    app.register_blueprint(main)
+    from api.controller import api_blpr
+    api.init_app(api_blpr)
+    app.register_blueprint(api_blpr)
+
 
     with app.app_context():
         db.create_all()

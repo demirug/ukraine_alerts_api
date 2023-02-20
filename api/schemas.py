@@ -1,6 +1,6 @@
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
-from app.models import Region, RegionStatus
+from api.models import Region, RegionStatus
 
 
 class RegionSchema(SQLAlchemyAutoSchema):
