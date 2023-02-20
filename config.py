@@ -4,6 +4,7 @@ from datetime import timedelta
 
 class Config:
     DEBUG = os.getenv("DEBUG")
+    SECRET_KEY = os.getenv("SECRET_KEY")
     SQLALCHEMY_DATABASE_URI = 'sqlite:///flask.db'
 
     REDIS_HOST = os.getenv("REDIS_HOST")
