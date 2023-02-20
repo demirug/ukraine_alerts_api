@@ -20,6 +20,8 @@ def create_app():
     api.init_app(api_blpr)
     app.register_blueprint(api_blpr)
 
+    from main.controller import main
+    app.register_blueprint(main)
 
     with app.app_context():
         db.create_all()
