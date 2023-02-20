@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <script src="https://www.paypal.com/sdk/js?client-id={{paypal_client}}&currency=USD"></script>
+    <div id="paypal-button-container"></div>
+    <script>
+      paypal.Buttons({
+        createOrder() {
+          return fetch(window.location.href, {
+            method: "post",
+          })
+          .then((response) => response.json())
+          .then((order) => order.id);
+        },
+
+        onApprove(data) {
+          fetch(window.location.href + "/capture", {
+            method: "post",
+          })
+          .then((response) => response.json())
+          .then((data) => {
+              if(data.status == "ERROR") {
+                alert("Payment error. Please contact administrator");
+              } else {
+                 location.reload();
+              }
+          });
+        }
+      }).render('#paypal-button-container');
+    </script>
+  </body>
+</html>
