@@ -1,3 +1,5 @@
+import os
+
 import dotenv
 from celery import Celery
 from flask import Flask
@@ -15,6 +17,7 @@ api = Api()
 
 def create_app():
     app = create_base_app()
+    app.jinja_env.globals["paypal_client"] = os.getenv("PAYPAL-CLIENT")
 
     from api.controller import api_blpr
     api.init_app(api_blpr)

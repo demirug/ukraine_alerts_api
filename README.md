@@ -19,11 +19,15 @@ Use it to faster data update
 
 ```
 DEBUG=True
+SECRET_KEY=MY_SUPER_SECRET_KEY
 
 REDIS_HOST=localhost
 REDIS_PORT=6379
 
 ALERTS-COM-UA-API-KEY=your_api_key
+
+PAYPAL-CLIENT=blablabla_client
+PAYPAL-PASSWORD=blablabla_password
 ```
 
 ### Setup celery

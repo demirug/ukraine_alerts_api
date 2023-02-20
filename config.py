@@ -9,6 +9,9 @@ class Config:
     REDIS_HOST = os.getenv("REDIS_HOST")
     REDIS_PORT = os.getenv("REDIS_PORT")
 
+    # Price for registering callback client in USD
+    CALLBACK_REGISTER_PRICE = 1
+
     CELERY_CONFIG = {
         'broker_url': f'redis://{REDIS_HOST}:{REDIS_PORT}/0',
         'result_backend': f'redis://{REDIS_HOST}:{REDIS_PORT}/0',
@@ -28,4 +31,3 @@ class Config:
             }
         }
     }
-
