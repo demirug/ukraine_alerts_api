@@ -33,6 +33,7 @@ class CallbackClient(db.Model):
     url = sq.Column(sq.String, nullable=False)
     signature = sq.Column(sq.String, nullable=False)
     email = sq.Column(sq.String, nullable=False)
-    enable = sq.Column(sq.Boolean, default=False)
+    paypal_order = sq.Column(sq.String, unique=True, nullable=False)
+    payed = sq.Column(sq.Boolean, default=False)
     timestamp = sq.Column(sq.DateTime, default=datetime.utcnow)
 
