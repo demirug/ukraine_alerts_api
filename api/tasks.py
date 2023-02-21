@@ -25,7 +25,7 @@ def inform_callback_clients(region_status_id):
         return
 
     json_data = RegionStatusSchema().dump(obj)
-    for client in CallbackClient.query.filter_by(enable=True):
+    for client in CallbackClient.query.filter_by(payed=True):
         try:
             requests.post(client.url, json=json_data, headers={"X-API-Key": client.signature}, timeout=1)
         except (ReadTimeout, ConnectTimeout):
