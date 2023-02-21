@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Order info</title>
-</head>
-<body>
-  <p>{{ object.url }}</p>
-  <p>{{ object.signature }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block body %}
+    <div class="my-5 py-5" style="border: 2px solid black">
+        <center>
+            <h4>Order information</h4>
+            <hr>
+            <p>Order code: {{ object.id }}</p>
+            <p>Email: {{ object.email }}</p>
+            <p>Register request url: {{ object.url }}</p>
+            <p>Signature: {{ object.signature }}</p>
+            <hr>
+            <h5>Usage example / Flask</h5>
+            <img src="https://i.imgur.com/9dvsYhK.png" alt="">
+        </center>
+    </div>
+{% endblock %}

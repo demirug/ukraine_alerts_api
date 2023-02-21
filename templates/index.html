@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
-    <a href="/api">API</a>
-    <a href="/callback">Callback</a>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block body %}
+  <center>
+    <h4>About us</h4>
+  <p>Air Raid Alert service taking a data from services such as <a href="https://alerts.in.ua">https://alerts.in.ua</a></p>
+  <p>And present alert data in human-readable format</p>
+  <p>Without need to have the API key</p>
+  <hr>
+    <h5>Contact me on questions</h5>
+    <p>Email: pm.antondolia@gmail.com</p>
+    <p>Telegram: <a href="https://t.me/demirug">@demirug</a></p>
+  <hr>
+  <a href="/api" class="btn btn-primary">API</a>
+  <a href="/callback" class="btn btn-success">Callback</a>
+  </center>
+
+{% endblock %}

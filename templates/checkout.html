@@ -1,11 +1,23 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock %}
+{% block head %}
     <script src="https://www.paypal.com/sdk/js?client-id={{paypal_client}}&currency=USD"></script>
-    <div id="paypal-button-container"></div>
+{% endblock %}
+
+{% block body %}
+    <div class="my-5 py-5" style="border: 2px solid black">
+        <center>
+            <h4>Checkout order</h4>
+            <hr>
+            <p>Order code: {{ object.id }}</p>
+            <p>Email: {{ object.email }}</p>
+            <p>Register request url: {{ object.url }}</p>
+            <hr>
+            <h5>Price to pay: 1$</h5>
+            <hr>
+            <div id="paypal-button-container"></div>
+        </center>
+    </div>
     <script>
       paypal.Buttons({
         createOrder() {
@@ -31,5 +43,4 @@
         }
       }).render('#paypal-button-container');
     </script>
-  </body>
-</html>
+{% endblock %}
