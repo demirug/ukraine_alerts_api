@@ -21,8 +21,7 @@ Use it to faster data update
 DEBUG=True
 SECRET_KEY=MY_SUPER_SECRET_KEY
 
-REDIS_HOST=localhost
-REDIS_PORT=6379
+REDIS_URL=redis://127.0.0.1:6379/0
 
 ALERTS-COM-UA-API-KEY=your_api_key
 

@@ -14,8 +14,8 @@ class Config:
     CALLBACK_REGISTER_PRICE = 1
 
     CELERY_CONFIG = {
-        'broker_url': f'redis://{REDIS_HOST}:{REDIS_PORT}/0',
-        'result_backend': f'redis://{REDIS_HOST}:{REDIS_PORT}/0',
+        'broker_url': os.getenv("REDIS_URL"),
+        'result_backend': os.getenv("REDIS_URL"),
         'accept_content': ['application/json'],
         'task_serializer': 'json',
         'result_serializer': 'json',
