@@ -35,7 +35,7 @@ def callback():
     return render_template("callback.html", form=form)
 
 
-@app.route("/checkout/<int:callback_id>", methods=["GET", "POST"])
+@app.route("/checkout/<string:callback_id>", methods=["GET", "POST"])
 def checkout(callback_id):
     callback_client = CallbackClient.query.get(callback_id)
     if callback_client is None:
@@ -50,7 +50,7 @@ def checkout(callback_id):
         return render_template("checkout.html", object=callback_client)
 
 
-@app.route("/checkout/<int:callback_id>/capture", methods=["POST"])
+@app.route("/checkout/<string:callback_id>/capture", methods=["POST"])
 def checkout_capture(callback_id):
     callback_client = CallbackClient.query.get(callback_id)
     if callback_client is None or callback_client.payed:
