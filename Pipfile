@@ -17,6 +17,7 @@ marshmallow-sqlalchemy = "*"
 flask-restx = "*"
 requests = "*"
 flask-wtf = "*"
+uuid = "*"
 
 [dev-packages]
 
