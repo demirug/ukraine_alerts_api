@@ -50,7 +50,7 @@ Running celery beat
 
 ## REST API
 
-At root page displaying swagger
+At `/api` page displaying swagger
 
 
 ### Get regions list
