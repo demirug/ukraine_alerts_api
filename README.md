@@ -1,7 +1,10 @@
 ## Ukraine alerts API
 
-Scrapping information from https://alerts.in.ua and represent data in friendly format 
+Scrapping information from alert info services and represent data in friendly format 
 
+Production: https://air-raid-alert.pp.ua/
+
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct-single.svg)](https://stand-with-ukraine.pp.ua/)
 ---
 
 
