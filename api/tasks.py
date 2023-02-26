@@ -1,11 +1,10 @@
 import requests
-from requests import ReadTimeout, ConnectTimeout
 
 from api.models import Region, RegionStatus, CallbackClient
 from api.schemas import RegionStatusSchema
 from api.services import get_or_create
 from application import celery, db
-from scrapping import get_alert_data_selenium, get_alert_data_api
+from scrapping import get_alert_data_selenium, get_alert_data_api, get_alert_data_mirror
 
 
 @celery.task
@@ -16,6 +15,11 @@ def update_status_api():
 @celery.task
 def update_status_selenium():
     __update_data(get_alert_data_selenium())
+
+
+@celery.task
+def update_data_mirror():
+    __update_data(get_alert_data_mirror())
 
 
 @celery.task

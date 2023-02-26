@@ -15,6 +15,23 @@ def get_alert_data_api(url="https://alerts.com.ua/api/states"):
     return [{"name": el['name'].replace(" область", ""), "alert": el['alert'], 'is_city': el['name'].startswith('м.')} for el in data['states']]
 
 
+def get_alert_data_mirror(url="https://emapa.fra1.cdn.digitaloceanspaces.com/statuses.json"):
+
+    replace = {
+        "АР Крим": "Автономна Республіка Крим",
+        "Севастополь'": "м. Севастополь"
+    }
+
+    data = requests.get(url).json()
+    rg_info = []
+    for name, dat in data['states'].items():
+        if name in replace:
+            name = replace[name]
+
+        rg_info.append({"name": name.replace(" область", ""), "alert": dat['enabled'], "is_city": name.startswith('м.')})
+    return rg_info
+
+
 def get_alert_data_selenium(url="https://alerts.in.ua"):
     options = webdriver.ChromeOptions()
 

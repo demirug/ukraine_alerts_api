@@ -29,6 +29,11 @@ class Config:
             'update_alert_info_api': {
                 'task': 'tasks.update_status_api',
                 'schedule': timedelta(seconds=5)
+            },
+
+            'update_alert_info_mirror': {
+                'task': 'tasks.update_data_mirror',
+                'schedule': timedelta(seconds=5)
             }
         }
     }
