@@ -13,10 +13,13 @@ Client is based on `python 3.7`
 
 To install dependencies use `pipenv` tool and run `pipenv install`
 
-Required to be installed any chrome webdriver to parse alert data
+If you want to fetch data with selenium task: chrome webdriver needs to be installed
 
-Set API-KEY for `ALERTS-COM-UA-API-KEY` env. Key you can get from https://alerts.com.ua/.
-Use it to faster data update
+If you want to fetch data from https://alerts.com.ua/ API: Set api key for `ALERTS-COM-UA-API-KEY` variable in .env
+
+Alternative fetching data don't required additional settings (Might not be as fast/stability)
+
+You can enable/disable fetch methods in `Config > CELERY_CONFIG > beat_schedule` by removing/adding them
 
 ### Setup  .env file
 
