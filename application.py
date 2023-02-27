@@ -34,8 +34,6 @@ def create_app():
         from api.services import init_regions
         init_regions()
 
-    migrate.init_app(app, db)
-
     return app
 
 
@@ -43,6 +41,7 @@ def create_base_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     db.init_app(app)
+    migrate.init_app(app, db)
 
     celery.conf.update(app.config["CELERY_CONFIG"])
     celery.config_from_object(app.config)
