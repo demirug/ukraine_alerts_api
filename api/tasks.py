@@ -43,6 +43,8 @@ def __update_data(data: []):
     """
     for el in data:
         region: Region = get_or_create(Region, name=el['name'], create={"is_city": el['is_city']})
+        if region.static:
+            continue
 
         last_status: RegionStatus = RegionStatus.query.filter_by(region_id=region.id).order_by(
             RegionStatus.timestamp.desc()).first()
