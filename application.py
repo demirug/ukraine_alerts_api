@@ -3,6 +3,7 @@ import os
 import dotenv
 from celery import Celery
 from flask import Flask
+from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,6 +14,7 @@ from config import Config
 db = SQLAlchemy()
 celery = Celery()
 api = Api()
+migrate = Migrate()
 
 
 def create_app():
@@ -31,6 +33,8 @@ def create_app():
 
         from api.services import init_regions
         init_regions()
+
+    migrate.init_app(app, db)
 
     return app
 

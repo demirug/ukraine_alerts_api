@@ -18,6 +18,7 @@ flask-restx = "*"
 requests = "*"
 flask-wtf = "*"
 uuid = "*"
+flask-migrate = "*"
 
 [dev-packages]
 
