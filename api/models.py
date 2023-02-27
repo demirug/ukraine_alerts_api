@@ -13,6 +13,7 @@ class Region(db.Model):
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(60), nullable=False, unique=True)
     is_city = sq.Column(sq.Boolean, default=False)
+    static = sq.Column(sq.Boolean, default=False)
 
     statuses: Mapped[List["RegionStatus"]] = sq.orm.relationship('RegionStatus', back_populates="region")
 
