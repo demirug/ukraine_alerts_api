@@ -52,9 +52,8 @@ Running celery beat
 
 At `/api` page displaying swagger
 
-
 ### Get regions list
-
+#### All regions have static id
 
     curl -X 'GET' 'http://127.0.0.1:5000/api/regions' -H 'accept: application/json'
 
@@ -123,6 +122,24 @@ At `/api` page displaying swagger
       "is_alert": false,
       "id": 1,
       "timestamp": "2023-02-11T10:23:13.292580"
+    }
+
+---
+
+### Get short region status by region id
+
+
+    curl -X 'GET' 'http://127.0.0.1:5000/api/status/1?short' -H 'accept: application/json'
+
+#### Response
+
+    HTTP/1.1 200 OK
+    Connection: close
+    Content-Type: application/json
+
+    {
+      "region_id": 1,
+      "is_alert": false,
     }
 
 ---
