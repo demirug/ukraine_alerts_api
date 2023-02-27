@@ -47,14 +47,14 @@ def get_alert_data_selenium(url="https://alerts.in.ua"):
     driver = webdriver.Chrome(options=options)
     driver.get(url)
     time.sleep(3)  # Time to load JS script 100%
-    content = driver.find_elements(By.CSS_SELECTOR, "#map > svg > g.text-labels > text.map-label")
+    content = driver.find_elements(By.CSS_SELECTOR, "path.map-district")
     data = list()
 
     for el in content:
         rs = {
-            "name": el.get_attribute('aria-label'),
-            "alert": 'active' in el.get_attribute('class').split(' '),
-            "is_city": el.get_attribute('aria-label').startswith('м.')
+            "name": el.get_attribute('data-oblast').replace(" область", ""),
+            "alert": el.get_attribute('data-alert-type') != "",
+            "is_city": el.get_attribute('data-oblast').startswith('м.')
         }
         if rs not in data:
             data.append(rs)
