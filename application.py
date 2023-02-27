@@ -31,6 +31,8 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    @app.before_first_request
+    def init():
         from api.services import init_regions
         init_regions()
 
