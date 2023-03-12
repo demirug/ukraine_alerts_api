@@ -1,5 +1,16 @@
-from api.models import Region
+from sqlalchemy import func, and_
+
+from api.models import Region, RegionStatus
 from application import db
+
+
+def get_statuses():
+    stmt = db.session.query(RegionStatus.region_id.label('region_id'),
+                            func.MAX(RegionStatus.timestamp).label('timestamp')).group_by(
+        RegionStatus.region_id).subquery()
+
+    return RegionStatus.query.join(stmt, and_(RegionStatus.region_id == stmt.c.region_id,
+                                              RegionStatus.timestamp == stmt.c.timestamp)).all()
 
 
 def get_or_create(model, create={}, **kwargs):
