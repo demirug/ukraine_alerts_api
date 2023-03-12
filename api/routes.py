@@ -49,3 +49,12 @@ class RegionStatus(Resource):
             return RegionShortStatusSchema().dump(region_status)
         return RegionStatusSchema().dump(region_status)
 
+
+@api.route('/render')
+class RenderMap(Resource):
+    def get(self):
+        """ Render html alert map"""
+        headers = {'Content-Type': 'text/html'}
+
+        return make_response(render_template('map.html', reg_data={el.region_id: el.is_alert for el in get_statuses()}),
+                             200, headers)
