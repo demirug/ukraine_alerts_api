@@ -3,6 +3,7 @@ import os
 import dotenv
 from celery import Celery
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
@@ -15,6 +16,7 @@ db = SQLAlchemy()
 celery = Celery()
 api = Api()
 migrate = Migrate()
+cors = CORS()
 
 
 def create_app():
@@ -44,7 +46,7 @@ def create_base_app():
     app.config.from_object(Config)
     db.init_app(app)
     migrate.init_app(app, db)
-
+    cors.init_app(app, resources={r"/static/*": {"origins": "*"}, "/api/*": {"origins": "*"}})
     celery.conf.update(app.config["CELERY_CONFIG"])
     celery.config_from_object(app.config)
 

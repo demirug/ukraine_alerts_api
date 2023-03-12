@@ -19,6 +19,7 @@ requests = "*"
 flask-wtf = "*"
 uuid = "*"
 flask-migrate = "*"
+flask-cors = "*"
 
 [dev-packages]
 
