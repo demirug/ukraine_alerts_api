@@ -7,6 +7,7 @@ from application import db
 import sqlalchemy as sq
 import uuid
 
+
 class Region(db.Model):
     __tablename__ = "regions"
 
@@ -30,7 +31,9 @@ class RegionStatus(db.Model):
 
 
 class CallbackClient(db.Model):
-    id = sq.Column(sq.String, primary_key=True, default=lambda : str(uuid.uuid4()))
+    __tablename__ = "callback_client"
+
+    id = sq.Column(sq.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     url = sq.Column(sq.String, nullable=False)
     signature = sq.Column(sq.String, nullable=False)
     email = sq.Column(sq.String, nullable=False)
