@@ -1,9 +1,11 @@
-from flask import abort, request, make_response, render_template
+import os
+
+from flask import abort, request, make_response, render_template, send_file
 from flask_restx import Resource
 
 from api.models import Region, RegionStatus
 from api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
-from api.services import get_statuses
+from api.services import get_statuses, render_alert_img
 from application import api
 
 
@@ -58,3 +60,14 @@ class RenderMap(Resource):
 
         return make_response(render_template('map.html', reg_data={el.region_id: el.is_alert for el in get_statuses()}),
                              200, headers)
+
+
+@api.route('/renderImage')
+class RenderMapImage(Resource):
+    @api.produces(['image/png'])
+    def get(self):
+        """ Render alert map image"""
+        if not os.path.isfile("alert-map.png"):
+            render_alert_img()
+
+        return send_file("alert-map.png", mimetype='image/png')

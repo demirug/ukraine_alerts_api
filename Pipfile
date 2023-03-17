@@ -20,6 +20,7 @@ flask-wtf = "*"
 uuid = "*"
 flask-migrate = "*"
 flask-cors = "*"
+html2image = "*"
 
 [dev-packages]
 

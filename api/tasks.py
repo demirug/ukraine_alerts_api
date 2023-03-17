@@ -2,7 +2,7 @@ import requests
 
 from api.models import Region, RegionStatus, CallbackClient
 from api.schemas import RegionStatusSchema
-from api.services import get_or_create
+from api.services import get_or_create, render_alert_img
 from application import celery, db
 from scrapping import get_alert_data_selenium, get_alert_data_api, get_alert_data_mirror
 
@@ -41,6 +41,8 @@ def __update_data(data: []):
     Update database with data
     :param data: list of dicts with structure {name: value, is_alert: value, is_city: value}
     """
+    new_informs = []
+
     for el in data:
         region: Region = get_or_create(Region, name=el['name'], create={"is_city": el['is_city']})
         if region.static:
@@ -51,8 +53,12 @@ def __update_data(data: []):
 
         if not last_status or last_status.is_alert != el['alert']:
             status: RegionStatus = RegionStatus(region_id=region.id, is_alert=el['alert'])
-
             db.session.add(status)
-            db.session.commit()
+            new_informs.append(status)
 
+    if new_informs:
+        db.session.commit()
+        render_alert_img()
+
+        for status in new_informs:
             inform_callback_clients.delay(status.id)
