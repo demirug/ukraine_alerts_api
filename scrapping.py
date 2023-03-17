@@ -15,7 +15,7 @@ def get_alert_data_api(url="https://alerts.com.ua/api/states"):
     return [{"name": el['name'].replace(" область", ""), "alert": el['alert'], 'is_city': el['name'].startswith('м.')} for el in data['states']]
 
 
-def get_alert_data_mirror(url="https://emapa.fra1.cdn.digitaloceanspaces.com/statuses.json"):
+def get_alert_data_mirror(url="https://vadimklimenko.com/map/statuses.json"):
 
     replace = {
         "АР Крим": "Автономна Республіка Крим",
