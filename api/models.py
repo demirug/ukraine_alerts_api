@@ -33,11 +33,11 @@ class RegionStatus(db.Model):
 class CallbackClient(db.Model):
     __tablename__ = "callback_client"
 
-    id = sq.Column(sq.String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    url = sq.Column(sq.String, nullable=False)
-    signature = sq.Column(sq.String, nullable=False)
-    email = sq.Column(sq.String, nullable=False)
-    paypal_order = sq.Column(sq.String, unique=True, nullable=False)
+    id = sq.Column(sq.String(96), primary_key=True, default=lambda: str(uuid.uuid4()))
+    url = sq.Column(sq.String(2048), nullable=False)
+    signature = sq.Column(sq.String(32), nullable=False)
+    email = sq.Column(sq.String(320), nullable=False)
+    paypal_order = sq.Column(sq.String(64), unique=True, nullable=False)
     payed = sq.Column(sq.Boolean, default=False)
     timestamp = sq.Column(sq.DateTime, default=datetime.utcnow)
 
