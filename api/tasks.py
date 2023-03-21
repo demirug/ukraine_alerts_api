@@ -1,4 +1,5 @@
 import requests
+from flask import current_app
 
 from api.models import Region, RegionStatus, CallbackClient
 from api.schemas import RegionStatusSchema
@@ -58,7 +59,8 @@ def __update_data(data: []):
 
     if new_informs:
         db.session.commit()
-        render_alert_img()
+        if current_app.config['RENDER_ALERT_MAP']:
+            render_alert_img()
 
         for status in new_informs:
             inform_callback_clients.delay(status.id)

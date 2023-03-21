@@ -1,6 +1,6 @@
 import os
 
-from flask import abort, request, make_response, render_template, send_file
+from flask import abort, request, make_response, render_template, send_file, current_app
 from flask_restx import Resource
 
 from api.models import Region, RegionStatus
@@ -67,7 +67,11 @@ class RenderMapImage(Resource):
     @api.produces(['image/png'])
     def get(self):
         """ Render alert map image"""
+
+        if not current_app.config['RENDER_ALERT_MAP']:
+            return send_file('static/not-provided.png', mimetype='image/png')
+
         if not os.path.isfile("alert-map.png"):
             render_alert_img()
 
-        return send_file("alert-map.png", mimetype='image/png')
+        return send_file("static/alert-map.png", mimetype='image/png')

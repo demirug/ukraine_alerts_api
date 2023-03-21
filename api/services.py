@@ -21,7 +21,7 @@ def render_alert_img():
     hti.screenshot(
         html_str=render_template('map.html', reg_data={el.region_id: el.is_alert for el in get_statuses()}),
         css_str="html { background-color: black; }",
-        save_as='alert-map.png',
+        save_as='static/alert-map.png',
         size=(600, 400)
     )
 

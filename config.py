@@ -12,6 +12,7 @@ class Config:
 
     # Price for registering callback client in USD
     CALLBACK_REGISTER_PRICE = 1
+    RENDER_ALERT_MAP = False
 
     CELERY_CONFIG = {
         'broker_url': os.getenv("REDIS_URL"),
