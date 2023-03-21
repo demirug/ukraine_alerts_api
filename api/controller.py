@@ -4,3 +4,4 @@ api_blpr = Blueprint('api', __name__, url_prefix='/api', template_folder='templa
 
 from .models import *
 from .routes import *
+from .cli import *
