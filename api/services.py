@@ -1,4 +1,6 @@
-from flask import render_template
+import os.path
+
+from flask import render_template, current_app
 from html2image import Html2Image
 from sqlalchemy import func, and_
 
@@ -21,7 +23,7 @@ def render_alert_img():
     hti.screenshot(
         html_str=render_template('map.html', reg_data={el.region_id: el.is_alert for el in get_statuses()}),
         css_str="html { background-color: black; }",
-        save_as='static/alert-map.png',
+        save_as='alert-map.png',
         size=(600, 400)
     )
 

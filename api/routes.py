@@ -74,4 +74,4 @@ class RenderMapImage(Resource):
         if not os.path.isfile("alert-map.png"):
             render_alert_img()
 
-        return send_file("static/alert-map.png", mimetype='image/png')
+        return send_file("alert-map.png", mimetype='image/png')
