@@ -17,7 +17,9 @@ If you want to fetch data from https://alerts.in.ua/ by selenium: chrome webdriv
 
 If you want to fetch data from https://alerts.com.ua/ API: Set api key for `ALERTS-COM-UA-API-KEY` variable in .env
 
-Alternative fetching data don't required additional settings (Might not be as fast/stability)
+If you want to fetch data from https://api.ukrainealarm.com/swagger/index.html API: set `UKRAINE-ALARM-COM-API-KEY` variable in .env
+
+Alternative fetching data don't required additional settings (Might not be as fast/stability).
 
 You can enable/disable fetch methods in `Config > CELERY_CONFIG > beat_schedule` by removing/adding them
 
@@ -30,6 +32,7 @@ SECRET_KEY=MY_SUPER_SECRET_KEY
 REDIS_URL=redis://127.0.0.1:6379/0
 
 ALERTS-COM-UA-API-KEY=your_api_key
+UKRAINE-ALARM-COM-API-KEY=your_api_key
 
 PAYPAL-CLIENT=blablabla_client
 PAYPAL-PASSWORD=blablabla_password
@@ -50,7 +53,7 @@ Running celery beat
 
 ## REST API
 
-At `/api` page displaying swagger
+At `/api` displaying swagger page
 
 ### Get regions list
 #### All regions have static id

@@ -22,18 +22,23 @@ class Config:
         'result_serializer': 'json',
 
         'beat_schedule': {
-            'update_alert_info_selenium': {
-                'task': 'tasks.update_status_selenium',
+            'update_alerts_in_ua_selenium': {
+                'task': 'tasks.update_status_alerts_in_ua_selenium',
                 'schedule': timedelta(minutes=15)
             },
 
-            'update_alert_info_api': {
-                'task': 'tasks.update_status_api',
+            'update_alerts_com_ua_API': {
+                'task': 'tasks.update_status_alerts_com_ua_API',
                 'schedule': timedelta(seconds=5)
             },
 
-            'update_alert_info_mirror': {
-                'task': 'tasks.update_data_mirror',
+            'update_ukrainealarm_com_API': {
+                'task': 'tasks.update_status_ukrainealarm_com_API',
+                'schedule': timedelta(seconds=5)
+            },
+
+            'update_vadimklimenko_statuses': {
+                'task': 'tasks.update_status_vadimklimenko_statuses',
                 'schedule': timedelta(seconds=5)
             }
         }

@@ -5,22 +5,28 @@ from api.models import Region, RegionStatus, CallbackClient
 from api.schemas import RegionStatusSchema
 from api.services import get_or_create, render_alert_img
 from application import celery, db
-from scrapping import get_alert_data_selenium, get_alert_data_api, get_alert_data_mirror
+from scrapping import get_alerts_alerts_in_ua_selenium, get_alerts_vadimklimenko_statuses, get_alerts_alerts_com_ua_API, \
+    get_alerts_ukrainealarm_com_API
 
 
 @celery.task
-def update_status_api():
-    __update_data(get_alert_data_api())
+def update_status_ukrainealarm_com_API():
+    __update_data(get_alerts_ukrainealarm_com_API())
 
 
 @celery.task
-def update_status_selenium():
-    __update_data(get_alert_data_selenium())
+def update_status_alerts_com_ua_API():
+    __update_data(get_alerts_alerts_com_ua_API())
 
 
 @celery.task
-def update_data_mirror():
-    __update_data(get_alert_data_mirror())
+def update_status_alerts_in_ua_selenium():
+    __update_data(get_alerts_alerts_in_ua_selenium())
+
+
+@celery.task
+def update_status_vadimklimenko_statuses():
+    __update_data(get_alerts_vadimklimenko_statuses())
 
 
 @celery.task
