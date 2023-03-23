@@ -1,8 +1,8 @@
 import click
 from flask import current_app
 
-from api.controller import api_blpr
-from api.models import Region, RegionStatus
+from apps.api.controller import api_blpr
+from apps.api.models import Region, RegionStatus
 from application import db
 from .services import render_alert_img
 from .tasks import inform_callback_clients

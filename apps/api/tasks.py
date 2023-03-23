@@ -1,9 +1,9 @@
 import requests
 from flask import current_app
 
-from api.models import Region, RegionStatus, CallbackClient
-from api.schemas import RegionStatusSchema
-from api.services import get_or_create, render_alert_img
+from apps.api.models import Region, RegionStatus, CallbackClient
+from apps.api.schemas import RegionStatusSchema
+from apps.api.services import get_or_create, render_alert_img
 from application import celery, db
 from scrapping import get_alerts_alerts_in_ua_selenium, get_alerts_vadimklimenko_statuses, get_alerts_alerts_com_ua_API, \
     get_alerts_ukrainealarm_com_API

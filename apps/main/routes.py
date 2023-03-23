@@ -4,11 +4,11 @@ import string
 
 from flask import render_template, request, url_for, abort, redirect, current_app
 
-from api.models import CallbackClient
+from apps.api.models import CallbackClient
 from application import db
-from main.controller import main as app
-from main.forms import CallbackOrderForm
-from main.paypal import create_order, capture_payment
+from apps.main.controller import main as app
+from apps.main.forms import CallbackOrderForm
+from apps.main.paypal import create_order, capture_payment
 
 
 @app.route("/")

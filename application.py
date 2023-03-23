@@ -22,7 +22,7 @@ def create_app():
     app = create_base_app()
     app.jinja_env.globals["paypal_client"] = os.getenv("PAYPAL-CLIENT")
 
-    api_doc(app, config_path='./api/swagger.yaml', url_prefix='/api', title="Ukraine Air Raid Alert API", parameters={
+    api_doc(app, config_path='apps/api/swagger.yaml', url_prefix='/api', title="Ukraine Air Raid Alert API", parameters={
         "deepLinking": "false",
         "displayRequestDuration": "true",
         "layout": "\"StandaloneLayout\"",
@@ -30,10 +30,10 @@ def create_app():
         "presets": "[SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset.slice(1)]",
     })
 
-    from api.controller import api_blpr
+    from apps.api.controller import api_blpr
     app.register_blueprint(api_blpr)
 
-    from main.controller import main
+    from apps.main.controller import main
     app.register_blueprint(main)
 
     with app.app_context():
@@ -41,7 +41,7 @@ def create_app():
 
     @app.before_first_request
     def init():
-        from api.services import init_regions
+        from apps.api.services import init_regions
         init_regions()
 
     return app

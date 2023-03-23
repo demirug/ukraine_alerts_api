@@ -1,10 +1,8 @@
-import os.path
-
-from flask import render_template, current_app
+from flask import render_template
 from html2image import Html2Image
 from sqlalchemy import func, and_
 
-from api.models import Region, RegionStatus
+from apps.api.models import Region, RegionStatus
 from application import db
 
 hti = Html2Image()

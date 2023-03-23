@@ -2,10 +2,10 @@ import os
 
 from flask import request, make_response, render_template, send_file, current_app
 
-from api.controller import api_blpr as api
-from api.models import Region, RegionStatus
-from api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
-from api.services import get_statuses, render_alert_img
+from apps.api.controller import api_blpr as api
+from apps.api.models import Region, RegionStatus
+from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
+from apps.api.services import get_statuses, render_alert_img
 
 
 @api.route('/regions')
