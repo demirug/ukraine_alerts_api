@@ -37,7 +37,7 @@ paths:
           description: If true will be use ShortStatus schema
           schema:
             type: boolean
-            example: true
+
       responses:
         '200':
           description: Success
@@ -47,7 +47,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Status'
-            
+
   /api/status/{region_id}:
     get:
       tags:
@@ -68,7 +68,6 @@ paths:
           description: If true will be use ShortStatus schema
           schema:
             type: boolean
-            example: true
       responses:
         '200':
           description: Success
