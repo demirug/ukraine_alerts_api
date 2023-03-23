@@ -5,8 +5,8 @@ from celery import Celery
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
-from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
+from swagger_ui import api_doc
 
 dotenv.load_dotenv()
 
@@ -14,7 +14,6 @@ from config import Config
 
 db = SQLAlchemy()
 celery = Celery()
-api = Api()
 migrate = Migrate()
 cors = CORS()
 
@@ -23,8 +22,15 @@ def create_app():
     app = create_base_app()
     app.jinja_env.globals["paypal_client"] = os.getenv("PAYPAL-CLIENT")
 
+    api_doc(app, config_path='./api/swagger.yaml', url_prefix='/api', title="Ukraine Air Raid Alert API", parameters={
+        "deepLinking": "false",
+        "displayRequestDuration": "true",
+        "layout": "\"StandaloneLayout\"",
+        "plugins": "[SwaggerUIBundle.plugins.DownloadUrl]",
+        "presets": "[SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset.slice(1)]",
+    })
+
     from api.controller import api_blpr
-    api.init_app(api_blpr)
     app.register_blueprint(api_blpr)
 
     from main.controller import main

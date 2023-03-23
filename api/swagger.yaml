@@ -1,0 +1,151 @@
+openapi: 3.0.2
+info:
+  title: Ukraine Air Raid Alert API
+  description: ""
+  contact:
+    email: pm.antondolia@gmail.com
+  version: "1.0"
+tags:
+  - name: Alerts
+  - name: Regions
+  - name: Render
+paths:
+  /api/regions:
+    get:
+      tags:
+        - Regions
+      summary: Return all registered regions 
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Region'
+
+  /api/status:
+    get:
+      tags:
+        - Alerts
+      summary: Return alert statuses of all regions
+      parameters:
+        - name: short
+          in: query
+          required: false
+          description: If true will be use ShortStatus schema
+          schema:
+            type: boolean
+            example: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+            
+  /api/status/{region_id}:
+    get:
+      tags:
+        - Alerts
+      summary: Return region status
+      parameters:
+        - name: region_id
+          in: path
+          required: true
+          description: Id of region
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: short
+          in: query
+          required: false
+          description: If true will be use ShortStatus schema
+          schema:
+            type: boolean
+            example: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '404':
+          description: Error region with given id not found
+          content:
+            application/json: {}
+            
+  /api/renderHtml:
+    get:
+      tags:
+        - Render
+      summary: Render Html alert map
+      responses:
+        '200':
+          description: Success
+          content:
+            text/html: {}
+  /api/renderImage:
+    get:
+      tags:
+        - Render
+      summary: Render Image alert map
+      responses:
+        '200':
+          description: Success
+          content:
+            image/png: {}
+        '404':
+          description: Error image rendering not supported
+          content:
+            application/json: {}
+    
+components:
+  schemas:
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: "Київська"
+        is_city:
+          type: boolean
+          example: true
+          
+    Status:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        region_id:
+          type: integer
+          example: 10
+        is_alert:
+          type: boolean
+          example: true
+        timestamp:
+          type: string
+          example: "2023-03-12T13:00:28.738938"
+          
+    ShortStatus:
+      type: object
+      properties:
+        region_id:
+          type: integer
+          example: 10
+        is_alert:
+          type: boolean
+          example: true
+        
+  
+  

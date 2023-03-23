@@ -14,13 +14,12 @@ celery = "*"
 redis = "*"
 eventlet = "*"
 marshmallow-sqlalchemy = "*"
-flask-restx = "*"
 requests = "*"
 flask-wtf = "*"
-uuid = "*"
 flask-migrate = "*"
 flask-cors = "*"
 html2image = "*"
+swagger-ui-py = "*"
 
 [dev-packages]
 
