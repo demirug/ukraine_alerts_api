@@ -20,6 +20,7 @@ flask-migrate = "*"
 flask-cors = "*"
 html2image = "*"
 swagger-ui-py = "*"
+gunicorn = "*"
 
 [dev-packages]
 
