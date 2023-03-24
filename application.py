@@ -22,7 +22,7 @@ def create_app():
     app = create_base_app()
     app.jinja_env.globals["paypal_client"] = os.getenv("PAYPAL-CLIENT")
 
-    api_doc(app, config_path='apps/api/swagger.yaml', url_prefix='/api', title="Ukraine Air Raid Alert API", parameters={
+    api_doc(app, config_path='apps/api/config/swagger.yaml', url_prefix='/api', title="Ukraine Air Raid Alert API", parameters={
         "deepLinking": "false",
         "displayRequestDuration": "true",
         "layout": "\"StandaloneLayout\"",
