@@ -3,7 +3,7 @@ from flask import current_app
 
 from apps.api.controller import api_blpr
 from apps.api.models import Region, RegionStatus
-from application import db
+from application import db, cache
 from .services import render_alert_img
 from .tasks import inform_callback_clients
 
@@ -47,6 +47,10 @@ def region_action(id, action):
             status = RegionStatus(region_id=region.id, is_alert=is_alert)
             db.session.add(status)
             db.session.commit()
+
+            cache.delete(f"/api/status/{region.id}")
+            cache.delete("/api/status")
+            cache.delete("/api/renderHtml")
 
             print(f"Region {region.name} alert status changed to {status.is_alert}")
 
