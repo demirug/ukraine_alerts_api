@@ -7,8 +7,9 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY")
     SQLALCHEMY_DATABASE_URI = 'sqlite:///flask.db'
 
-    REDIS_HOST = os.getenv("REDIS_HOST")
-    REDIS_PORT = os.getenv("REDIS_PORT")
+    CACHE_TYPE = "RedisCache"
+    CACHE_REDIS_URL = os.getenv("REDIS_URL")
+    CACHE_DEFAULT_TIMEOUT = 300
 
     # Price for registering callback client in USD
     CALLBACK_REGISTER_PRICE = 1

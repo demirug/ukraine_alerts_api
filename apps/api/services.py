@@ -3,7 +3,7 @@ from html2image import Html2Image
 from sqlalchemy import func, and_
 
 from apps.api.models import Region, RegionStatus
-from application import db
+from application import db, cache
 
 hti = Html2Image()
 
@@ -29,14 +29,14 @@ def render_alert_img():
 def get_or_create(model, create={}, **kwargs):
     instance = model.query.filter_by(**kwargs).first()
     if instance:
-        return instance
+        return instance, False
     else:
         instance = model(**kwargs, **create)
 
         db.session.add(instance)
         db.session.commit()
 
-        return instance
+        return instance, True
 
 
 def init_regions():
@@ -71,3 +71,4 @@ def init_regions():
             Region(id=27, name="Волинська", is_city=False),
         ])
         db.session.commit()
+        cache.delete("/api/regions")

@@ -21,6 +21,7 @@ flask-cors = "*"
 html2image = "*"
 swagger-ui-py = "*"
 gunicorn = "*"
+flask-caching = "*"
 
 [dev-packages]
 

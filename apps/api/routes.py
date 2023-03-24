@@ -2,6 +2,7 @@ import os
 
 from flask import request, make_response, render_template, send_file, current_app
 
+from application import cache
 from apps.api.controller import api_blpr as api
 from apps.api.models import Region, RegionStatus
 from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
@@ -9,6 +10,7 @@ from apps.api.services import get_statuses, render_alert_img
 
 
 @api.route('/regions')
+@cache.cached(key_prefix="%s")
 def regionList():
     """
     Return: json list of all registered regions
@@ -19,6 +21,7 @@ def regionList():
 
 
 @api.route('/status')
+@cache.cached(key_prefix="%s")
 def regionStatusList():
     """
     Return: json list of all current region statuses
@@ -33,6 +36,7 @@ def regionStatusList():
 
 
 @api.route('/status/<int:region_id>')
+@cache.cached(key_prefix="%s")
 def regionStatusDetail(region_id):
     """
     Return: json of region current status
@@ -49,6 +53,7 @@ def regionStatusDetail(region_id):
 
 
 @api.route('/renderHtml')
+@cache.cached(key_prefix="%s")
 def renderHtml():
     """ Render html alert map"""
     headers = {'Content-Type': 'text/html'}
@@ -58,6 +63,7 @@ def renderHtml():
 
 
 @api.route('/renderImage')
+@cache.cached(key_prefix="%s")
 def renderImage():
     """ Render alert map image"""
 

@@ -1,10 +1,12 @@
+from datetime import datetime
+
 import requests
 from flask import current_app
 
 from apps.api.models import Region, RegionStatus, CallbackClient
 from apps.api.schemas import RegionStatusSchema
 from apps.api.services import get_or_create, render_alert_img
-from application import celery, db
+from application import celery, db, cache
 from scrapping import get_alerts_alerts_in_ua_selenium, get_alerts_vadimklimenko_statuses, get_alerts_alerts_com_ua_API, \
     get_alerts_ukrainealarm_com_API
 
@@ -51,7 +53,11 @@ def __update_data(data: []):
     new_informs = []
 
     for el in data:
-        region: Region = get_or_create(Region, name=el['name'], create={"is_city": el['is_city']})
+        region, created = get_or_create(Region, name=el['name'], create={"is_city": el['is_city']})
+
+        if created:
+            cache.delete("/api/regions")
+
         if region.static:
             continue
 
@@ -59,9 +65,8 @@ def __update_data(data: []):
             RegionStatus.timestamp.desc()).first()
 
         if not last_status or last_status.is_alert != el['alert']:
-            status: RegionStatus = RegionStatus(region_id=region.id, is_alert=el['alert'])
+            status: RegionStatus = RegionStatus(region_id=region.id, is_alert=el['alert'], timestamp=datetime.utcnow)
             db.session.add(status)
-            db.session.commit()
 
             if last_status:
                 last_status.end_timestamp = status.timestamp
@@ -71,8 +76,14 @@ def __update_data(data: []):
 
     if new_informs:
         db.session.commit()
+
+        cache.delete_many([f"/api/status/{el.region_id}" for el in new_informs])
+        cache.delete("/api/status")
+        cache.delete("/api/renderHtml")
+
         if current_app.config['RENDER_ALERT_MAP']:
             render_alert_img()
+            cache.delete("/api/renderImage")
 
         for status in new_informs:
             inform_callback_clients.delay(status.id)

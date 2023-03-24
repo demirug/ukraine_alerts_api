@@ -5,13 +5,14 @@ import string
 from flask import render_template, request, url_for, abort, redirect, current_app
 
 from apps.api.models import CallbackClient
-from application import db
+from application import db, cache
 from apps.main.controller import main as app
 from apps.main.forms import CallbackOrderForm
 from apps.main.paypal import create_order, capture_payment
 
 
 @app.route("/")
+@cache.cached()
 def index():
     return render_template("index.html")
 
