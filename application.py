@@ -26,7 +26,7 @@ def create_app():
 
     api_doc(app, config_path='apps/api/config/swagger.yaml', url_prefix='/api', title="Ukraine Air Raid Alert API", parameters={
         "deepLinking": "false",
-        "displayRequestDuration": "true",
+        "displayRequestDuration": "false",
         "layout": "\"StandaloneLayout\"",
         "plugins": "[SwaggerUIBundle.plugins.DownloadUrl]",
         "presets": "[SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset.slice(1)]",
