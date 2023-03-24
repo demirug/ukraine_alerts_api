@@ -3,7 +3,6 @@ from datetime import datetime, date
 from operator import and_
 
 from flask import request, make_response, render_template, send_file, current_app
-from sqlalchemy import or_
 
 from application import cache
 from apps.api.controller import api_blpr as api
@@ -56,6 +55,7 @@ def regionStatusDetail(region_id):
 
 
 @api.route('/history')
+@cache.cached(key_prefix=lambda: request.full_path)
 def regionsHistory():
     """
      Return history of regions
@@ -74,6 +74,7 @@ def regionsHistory():
 
 
 @api.route('/history/<int:region_id>')
+@cache.cached(key_prefix=lambda: request.full_path)
 def regionHistory(region_id):
     """
      Return history of region by region_id
