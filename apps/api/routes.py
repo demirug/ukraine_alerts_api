@@ -69,8 +69,7 @@ def regionsHistory():
 
     return RegionStatusSchema().dump(
         RegionStatus.query.filter(
-            and_(RegionStatus.timestamp >= from_date,
-                 or_(RegionStatus.end_timestamp == None, RegionStatus.end_timestamp <= to_date)))
+            and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date))
         .order_by(RegionStatus.id).limit(limit), many=True)
 
 
@@ -92,9 +91,7 @@ def regionHistory(region_id):
 
     return RegionStatusSchema().dump(
         RegionStatus.query.filter(and_(RegionStatus.region_id == region_id,
-                                       and_(RegionStatus.timestamp >= from_date,
-                                            or_(RegionStatus.end_timestamp == None,
-                                                RegionStatus.end_timestamp <= to_date))))
+                                       and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date)))
         .order_by(RegionStatus.id).limit(limit), many=True)
 
 

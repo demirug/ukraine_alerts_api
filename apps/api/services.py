@@ -21,7 +21,7 @@ def get_statuses():
 
 def parse_date(data):
     """ Parsing date for arguments """
-    res = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S")
+    res = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S.%f")
     return res
 
 
