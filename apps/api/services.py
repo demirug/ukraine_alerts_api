@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import render_template
 from html2image import Html2Image
 from sqlalchemy import func, and_
@@ -15,6 +17,20 @@ def get_statuses():
 
     return RegionStatus.query.join(stmt, and_(RegionStatus.region_id == stmt.c.region_id,
                                               RegionStatus.timestamp == stmt.c.timestamp)).all()
+
+
+def parse_date(data):
+    """ Parsing date for arguments """
+    res = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S")
+    return res
+
+
+def parse_uint(data):
+    """ Parsing positive int for arguments """
+    val = abs(int(data))
+    if val == 0:
+        raise ValueError("Value must be greater than 0")
+    return val
 
 
 def render_alert_img():

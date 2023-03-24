@@ -1,12 +1,15 @@
 import os
+from datetime import datetime, date
+from operator import and_
 
 from flask import request, make_response, render_template, send_file, current_app
+from sqlalchemy import or_
 
 from application import cache
 from apps.api.controller import api_blpr as api
 from apps.api.models import Region, RegionStatus
 from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
-from apps.api.services import get_statuses, render_alert_img
+from apps.api.services import get_statuses, render_alert_img, parse_date, parse_uint
 
 
 @api.route('/regions')
@@ -50,6 +53,49 @@ def regionStatusDetail(region_id):
     if request.args.get("short", default=False, type=bool):
         return RegionShortStatusSchema().dump(region_status)
     return RegionStatusSchema().dump(region_status)
+
+
+@api.route('/history')
+def regionsHistory():
+    """
+     Return history of regions
+     Available args: from (date), to (date), limit (int > 1)
+     Date format: %Y%m%d%H%M%S
+    """
+
+    from_date = request.args.get('from', default=date.min, type=parse_date)
+    to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
+    limit = request.args.get('limit', default=1000, type=parse_uint)
+
+    return RegionStatusSchema().dump(
+        RegionStatus.query.filter(
+            and_(RegionStatus.timestamp >= from_date,
+                 or_(RegionStatus.end_timestamp == None, RegionStatus.end_timestamp <= to_date)))
+        .order_by(RegionStatus.id).limit(limit), many=True)
+
+
+@api.route('/history/<int:region_id>')
+def regionHistory(region_id):
+    """
+     Return history of region by region_id
+     Available args: from (date), to (date), limit (int > 1)
+     Date format: %Y%m%d%H%M%S
+    """
+
+    region: Region = Region.query.filter_by(id=region_id).first()
+    if not region:
+        return {"status": "NOT FOUND"}, 404
+
+    from_date = request.args.get('from', default=date.min, type=parse_date)
+    to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
+    limit = request.args.get('limit', default=1000, type=parse_uint)
+
+    return RegionStatusSchema().dump(
+        RegionStatus.query.filter(and_(RegionStatus.region_id == region_id,
+                                       and_(RegionStatus.timestamp >= from_date,
+                                            or_(RegionStatus.end_timestamp == None,
+                                                RegionStatus.end_timestamp <= to_date))))
+        .order_by(RegionStatus.id).limit(limit), many=True)
 
 
 @api.route('/renderHtml')

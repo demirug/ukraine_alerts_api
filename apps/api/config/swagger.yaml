@@ -79,7 +79,102 @@ paths:
           description: Error region with given id not found
           content:
             application/json: {}
-            
+  /api/history:
+    get:
+      tags:
+        - Alerts
+      summary: Return alert history of all regions
+      parameters:
+        - name: from
+          in: query
+          required: false
+          description: Filter from date
+          schema:
+            type: string
+            pattern: ([\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2})
+            example: "2020-01-15T05:30:55"
+        - name: to
+          in: query
+          required: false
+          description: Filter to date. Default value current date
+          schema:
+            type: string
+            pattern: ([\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2})
+            example: "2024-01-15T05:30:55"
+        - name: limit
+          in: query
+          required: false
+          description: Limit of result rows. Default value is 1000 rows
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            example: 10
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+
+  /api/history/{region_id}:
+    get:
+      tags:
+        - Alerts
+      summary: Return region alert history
+      parameters:
+        - name: region_id
+          in: path
+          required: true
+          description: Id of region
+          schema:
+            type : integer
+            format: int64
+            minimum: 0
+        - name: from
+          in: query
+          required: false
+          description: Filter from date
+          schema:
+            type: string
+            pattern: ([\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2})
+            example: "2020-01-15T05:30:55"
+        - name: to
+          in: query
+          required: false
+          description: Filter to date. Default value current date
+          schema:
+            type: string
+            pattern: ([\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2})
+            example: "2024-01-15T05:30:55"
+        - name: limit
+          in: query
+          required: false
+          description: Limit of result rows. Default value is 1000 rows
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            example: 10
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+        '404':
+          description: Error region with given id not found
+          content:
+            application/json: {}
+
   /api/renderHtml:
     get:
       tags:
