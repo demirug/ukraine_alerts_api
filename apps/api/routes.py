@@ -27,7 +27,7 @@ def regionStatusList():
 
     regions = get_statuses()
 
-    if 'short' in request.args:
+    if request.args.get("short", default=False, type=bool):
         return RegionShortStatusSchema(many=True).dump(regions)
     return RegionStatusSchema(many=True).dump(regions)
 
@@ -43,7 +43,7 @@ def regionStatusDetail(region_id):
         RegionStatus.timestamp.desc()).first()
     if region_status is None:
         return {"status": "NOT FOUND"}, 404
-    if 'short' in request.args:
+    if request.args.get("short", default=False, type=bool):
         return RegionShortStatusSchema().dump(region_status)
     return RegionStatusSchema().dump(region_status)
 
