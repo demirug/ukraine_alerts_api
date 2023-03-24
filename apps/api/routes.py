@@ -63,7 +63,6 @@ def renderHtml():
 
 
 @api.route('/renderImage')
-@cache.cached(key_prefix="%s")
 def renderImage():
     """ Render alert map image"""
 

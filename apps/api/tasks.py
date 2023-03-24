@@ -83,7 +83,6 @@ def __update_data(data: []):
 
         if current_app.config['RENDER_ALERT_MAP']:
             render_alert_img()
-            cache.delete("/api/renderImage")
 
         for status in new_informs:
             inform_callback_clients.delay(status.id)
