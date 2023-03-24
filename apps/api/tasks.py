@@ -5,8 +5,8 @@ from flask import current_app
 
 from apps.api.models import Region, RegionStatus, CallbackClient
 from apps.api.schemas import RegionStatusSchema
-from apps.api.services import get_or_create, render_alert_img
-from application import celery, db, cache
+from apps.api.services import get_or_create, render_alert_img, delete_cache
+from application import celery, db
 from scrapping import get_alerts_alerts_in_ua_selenium, get_alerts_vadimklimenko_statuses, get_alerts_alerts_com_ua_API, \
     get_alerts_ukrainealarm_com_API
 
@@ -51,13 +51,11 @@ def __update_data(data: []):
     :param data: list of dicts with structure {name: value, is_alert: value, is_city: value}
     """
     new_informs = []
-
+    new_regions = False
     for el in data:
         region, created = get_or_create(Region, name=el['name'], create={"is_city": el['is_city']})
-
         if created:
-            cache.delete("/api/regions")
-
+            new_regions = True
         if region.static:
             continue
 
@@ -77,9 +75,7 @@ def __update_data(data: []):
     if new_informs:
         db.session.commit()
 
-        cache.delete_many([f"/api/status/{el.region_id}" for el in new_informs])
-        cache.delete("/api/status")
-        cache.delete("/api/renderHtml")
+        delete_cache([status.region_id for status in new_informs], new_regions)
 
         if current_app.config['RENDER_ALERT_MAP']:
             render_alert_img()

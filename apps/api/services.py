@@ -19,6 +19,35 @@ def get_statuses():
                                               RegionStatus.timestamp == stmt.c.timestamp)).all()
 
 
+def __delete_cache_path_with_args(path):
+    """ Works only with RedisCache """
+    cache.delete(path)
+    for key in cache.cache._write_client.keys(f"flask_cache_{path}*"):
+        cache.delete(key.decode("UTF-8")[12:])
+
+
+def delete_cache(new_statuses, new_regions: bool):
+    """
+    On receiving new regions information, delete old cache
+    :param new_statuses: Single or list of regions id which received new alert statuses
+    :param new_regions: Is a new region(s) registered
+    """
+    if not isinstance(new_statuses, list):
+        new_statuses = [new_statuses]
+
+    cache.delete("/api/status")
+    for el in new_statuses:
+        cache.delete(f"/api/status/{el}")
+    cache.delete("/api/renderHtml")
+    __delete_cache_path_with_args("/api/history")
+
+    for el in new_statuses:
+        __delete_cache_path_with_args(f"/api/history/{el}")
+
+    if new_regions:
+        cache.delete("/api/regions")
+
+
 def parse_date(data):
     """ Parsing date for arguments """
     res = datetime.strptime(data, "%Y-%m-%dT%H:%M:%S.%f")
