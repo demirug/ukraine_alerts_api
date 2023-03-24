@@ -7,7 +7,7 @@ from flask import request, make_response, render_template, send_file, current_ap
 from application import cache
 from apps.api.controller import api_blpr as api
 from apps.api.models import Region, RegionStatus
-from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema
+from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema, HistoryRegionStatusSchema
 from apps.api.services import get_statuses, render_alert_img, parse_date, parse_uint
 
 
@@ -67,7 +67,7 @@ def regionsHistory():
     to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
-    return RegionStatusSchema().dump(
+    return HistoryRegionStatusSchema().dump(
         RegionStatus.query.filter(
             and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date))
         .order_by(RegionStatus.id).limit(limit), many=True)
@@ -90,7 +90,7 @@ def regionHistory(region_id):
     to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
-    return RegionStatusSchema().dump(
+    return HistoryRegionStatusSchema().dump(
         RegionStatus.query.filter(and_(RegionStatus.region_id == region_id,
                                        and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date)))
         .order_by(RegionStatus.id).limit(limit), many=True)

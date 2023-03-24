@@ -120,7 +120,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Status'
+                  $ref: '#/components/schemas/HistoryStatus'
 
   /api/history/{region_id}:
     get:
@@ -170,7 +170,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Status'
+                  $ref: '#/components/schemas/HistoryStatus'
         '404':
           description: Error region with given id not found
           content:
@@ -200,7 +200,7 @@ paths:
           description: Error image rendering not supported
           content:
             application/json: {}
-    
+
 components:
   schemas:
     Region:
@@ -215,7 +215,7 @@ components:
         is_city:
           type: boolean
           example: true
-          
+
     Status:
       type: object
       properties:
@@ -231,7 +231,7 @@ components:
         timestamp:
           type: string
           example: "2023-03-12T13:00:28.738938"
-          
+
     ShortStatus:
       type: object
       properties:
@@ -241,6 +241,23 @@ components:
         is_alert:
           type: boolean
           example: true
-        
-  
+
+    HistoryStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        region_id:
+          type: integer
+          example: 10
+        is_alert:
+          type: boolean
+          example: true
+        timestamp:
+          type: string
+          example: "2020-03-12T13:00:28.738938"
+        end_timestamp:
+          type: string
+          example: "2023-03-12T13:00:28.738938"
   
