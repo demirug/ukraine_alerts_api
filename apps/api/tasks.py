@@ -61,6 +61,12 @@ def __update_data(data: []):
         if not last_status or last_status.is_alert != el['alert']:
             status: RegionStatus = RegionStatus(region_id=region.id, is_alert=el['alert'])
             db.session.add(status)
+            db.session.commit()
+
+            if last_status:
+                last_status.end_timestamp = status.timestamp
+                db.session.add(last_status)
+
             new_informs.append(status)
 
     if new_informs:

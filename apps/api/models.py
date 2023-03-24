@@ -26,6 +26,7 @@ class RegionStatus(db.Model):
     region_id = sq.Column(sq.Integer, sq.ForeignKey('regions.id'), nullable=False)
     is_alert = sq.Column(sq.Boolean, nullable=False)
     timestamp = sq.Column(sq.DateTime, default=datetime.utcnow)
+    end_timestamp = sq.Column(sq.DateTime, nullable=True)
 
     region: Mapped["Region"] = sq.orm.relationship('Region', back_populates="statuses")
 
