@@ -15,6 +15,8 @@ To install dependencies use `pipenv` tool and run `pipenv install`
 
 And run `flask db stamp head` to set migration version to highest
 
+On updating project don't forget to run `flask db upgrade`
+
 If you want to fetch data from https://alerts.in.ua/ by selenium: chrome webdriver needs to be installed
 
 If you want to fetch data from https://alerts.com.ua/ API: Set api key for `ALERTS-COM-UA-API-KEY` variable in .env
