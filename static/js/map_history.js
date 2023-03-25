@@ -50,24 +50,24 @@ function showModal(elm_id, elm_name="None") {
         let modal = new MainModal();
         modal.setTitle(elm_name + " alert history");
 
-        if(this.response.length > 1) {
-            let id = 0;
-            for(var el of this.response) {
-              if(el['is_alert']) {
-                if(id != 0) {
-                    modal.addToBody("<hr>")
-                } else id++;
-                if(el['end_timestamp'] == null) {
-                  modal.addToBody("<p>Period: " + formatTime(el['timestamp']) +  " -- NOW</p>")
-                } else {
-                  modal.addToBody("<p>Period: " + formatTime(el['timestamp']) + " -- " + formatTime(el['end_timestamp']) +  "</p>")
-                  modal.addToBody("<p>Alarm duration: " + formatDuration(new Date(el['end_timestamp']) - new Date(el['timestamp'])) +  "</p>")
-                }
+        let id = 0;
+        for(var el of this.response) {
+          if(el['is_alert']) {
+            if(id != 0) {
+                modal.addToBody("<hr>")
+            } else id++;
 
-              }
+            if(el['end_timestamp'] == null) {
+              modal.addToBody("<p>Period: " + formatTime(el['timestamp']) +  " -- NOW</p>")
+            } else {
+              modal.addToBody("<p>Period: " + formatTime(el['timestamp']) + " -- " + formatTime(el['end_timestamp']) +  "</p>")
+              modal.addToBody("<p>Alarm duration: " + formatDuration(new Date(el['end_timestamp']) - new Date(el['timestamp'])) +  "</p>")
             }
-        } else {
-             modal.addToBody("<h5>History not found</h5>")
+          }
+        }
+
+        if(id == 0) {
+            modal.addToBody("<h5>History not found</h5>")
         }
 
         modal.addFooterCloseButton().show();
