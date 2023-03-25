@@ -70,7 +70,7 @@ def regionsHistory():
     return HistoryRegionStatusSchema().dump(
         RegionStatus.query.filter(
             and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date))
-        .order_by(RegionStatus.id).limit(limit), many=True)
+        .order_by(RegionStatus.timestamp.desc()).limit(limit), many=True)
 
 
 @api.route('/history/<int:region_id>')
@@ -93,7 +93,7 @@ def regionHistory(region_id):
     return HistoryRegionStatusSchema().dump(
         RegionStatus.query.filter(and_(RegionStatus.region_id == region_id,
                                        and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date)))
-        .order_by(RegionStatus.id).limit(limit), many=True)
+        .order_by(RegionStatus.timestamp.desc()).limit(limit), many=True)
 
 
 @api.route('/renderHtml')
