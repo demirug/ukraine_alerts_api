@@ -27,9 +27,7 @@ function formatDuration(timestamp) {
 }
 
 function formatTime(timestamp) {
-    console.log(timestamp)
     var date = new Date(timestamp);
-    console.log(date.getYear())
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
 }
 
