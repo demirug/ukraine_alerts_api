@@ -8,7 +8,7 @@ from application import cache
 from apps.api.controller import api_blpr as api
 from apps.api.models import Region, RegionStatus
 from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema, HistoryRegionStatusSchema
-from apps.api.services import get_statuses, render_alert_img, parse_date, parse_uint
+from apps.api.services import get_statuses, render_alert_img, parse_date, parse_uint, parse_bool
 
 
 @api.route('/regions')
@@ -32,7 +32,7 @@ def regionStatusList():
 
     regions = get_statuses()
 
-    if request.args.get("short", default=False, type=bool):
+    if request.args.get("short", default=False, type=parse_bool):
         return RegionShortStatusSchema(many=True).dump(regions)
     return RegionStatusSchema(many=True).dump(regions)
 
@@ -49,7 +49,7 @@ def regionStatusDetail(region_id):
         RegionStatus.timestamp.desc()).first()
     if region_status is None:
         return {"status": "NOT FOUND"}, 404
-    if request.args.get("short", default=False, type=bool):
+    if request.args.get("short", default=False, type=parse_bool):
         return RegionShortStatusSchema().dump(region_status)
     return RegionStatusSchema().dump(region_status)
 

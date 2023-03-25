@@ -62,6 +62,16 @@ def parse_uint(data):
     return val
 
 
+def parse_bool(data: str) -> bool:
+
+    if data == "True" or data == "true":
+        return True
+    elif data == "False" or data == "false":
+        return False
+    else:
+        raise ValueError("Incorrect input data")
+
+
 def render_alert_img():
     hti.screenshot(
         html_str=render_template('map.html', reg_data={el.region_id: el.is_alert for el in get_statuses()}),
