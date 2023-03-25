@@ -27,17 +27,10 @@ function formatDuration(timestamp) {
 }
 
 function formatTime(timestamp) {
-    let date = new Date(timestamp);
-    return new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "numeric",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-          hour12: false
-      }
-  ).format(date);
+    console.log(timestamp)
+    var date = new Date(timestamp);
+    console.log(date.getYear())
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
 }
 
 function showModal(elm_id, elm_name="None") {
