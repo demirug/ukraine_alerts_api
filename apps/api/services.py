@@ -22,8 +22,8 @@ def get_statuses():
 def __delete_cache_path_with_args(path):
     """ Works only with RedisCache """
     cache.delete(path)
-    for key in cache.cache._write_client.keys(f"flask_cache_{path}*"):
-        cache.delete(key.decode("UTF-8")[12:])
+    for key in cache.cache._read_client.keys(f"flask_cache_{path}?*"):
+        cache.cache._write_client.delete(key)
 
 
 def delete_cache(new_statuses, new_regions: bool):
@@ -35,9 +35,10 @@ def delete_cache(new_statuses, new_regions: bool):
     if not isinstance(new_statuses, list):
         new_statuses = [new_statuses]
 
-    cache.delete("/api/status")
+    __delete_cache_path_with_args("/api/status")
+
     for el in new_statuses:
-        cache.delete(f"/api/status/{el}")
+        __delete_cache_path_with_args(f"/api/status/{el}")
     cache.delete("/api/renderHtml")
     __delete_cache_path_with_args("/api/history")
 

@@ -23,7 +23,7 @@ def regionList():
 
 
 @api.route('/status')
-@cache.cached(key_prefix="%s")
+@cache.cached(key_prefix=lambda: request.full_path)
 def regionStatusList():
     """
     Return: json list of all current region statuses
@@ -38,7 +38,7 @@ def regionStatusList():
 
 
 @api.route('/status/<int:region_id>')
-@cache.cached(key_prefix="%s")
+@cache.cached(key_prefix=lambda: request.full_path)
 def regionStatusDetail(region_id):
     """
     Return: json of region current status
