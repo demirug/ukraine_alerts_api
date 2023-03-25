@@ -67,10 +67,13 @@ def regionsHistory():
     to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
-    return HistoryRegionStatusSchema().dump(
-        RegionStatus.query.filter(
+    qr = RegionStatus.query.filter(
             and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date))
-        .order_by(RegionStatus.timestamp.desc()).limit(limit), many=True)
+
+    if not request.args.get('stable', default=True, type=parse_bool):
+        qr = qr.filter_by(is_alert=True)
+
+    return HistoryRegionStatusSchema().dump(qr.order_by(RegionStatus.timestamp.desc()).limit(limit), many=True)
 
 
 @api.route('/history/<int:region_id>')
@@ -90,10 +93,13 @@ def regionHistory(region_id):
     to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
-    return HistoryRegionStatusSchema().dump(
-        RegionStatus.query.filter(and_(RegionStatus.region_id == region_id,
-                                       and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date)))
-        .order_by(RegionStatus.timestamp.desc()).limit(limit), many=True)
+    qr = RegionStatus.query.filter(and_(RegionStatus.region_id == region.id,
+                                        and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date)))
+
+    if not request.args.get('stable', default=True, type=parse_bool):
+        qr = qr.filter_by(is_alert=True)
+
+    return HistoryRegionStatusSchema().dump(qr.order_by(RegionStatus.timestamp.desc()).limit(limit), many=True)
 
 
 @api.route('/renderHtml')
