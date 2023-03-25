@@ -43,7 +43,7 @@ function formatTime(timestamp) {
 function showModal(elm_id, elm_name="None") {
 
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/api/history/' + elm_id + '?stable=false&limit=10');
+    xhr.open('GET', '/api/history/' + elm_id + '?stable=false&limit=6');
     xhr.responseType = 'json';
     xhr.onload = function(e) {
       if (this.status == 200) {
