@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, date
+from datetime import date
 from operator import and_
 
 from flask import request, make_response, render_template, send_file, current_app
@@ -8,7 +8,7 @@ from application import cache
 from apps.api.controller import api_blpr as api
 from apps.api.models import Region, RegionStatus
 from apps.api.schemas import RegionSchema, RegionStatusSchema, RegionShortStatusSchema, HistoryRegionStatusSchema
-from apps.api.services import get_statuses, render_alert_img, parse_date, parse_uint, parse_bool
+from apps.api.services import get_statuses, render_alert_img, parse_date, parse_uint, parse_bool, get_current_time
 
 
 @api.route('/regions')
@@ -64,7 +64,7 @@ def regionsHistory():
     """
 
     from_date = request.args.get('from', default=date.min, type=parse_date)
-    to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
+    to_date = request.args.get('to', default=get_current_time(), type=parse_date)
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
     qr = RegionStatus.query.filter(
@@ -90,7 +90,7 @@ def regionHistory(region_id):
         return {"status": "NOT FOUND"}, 404
 
     from_date = request.args.get('from', default=date.min, type=parse_date)
-    to_date = request.args.get('to', default=datetime.utcnow(), type=parse_date)
+    to_date = request.args.get('to', default=get_current_time(), type=parse_date)
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
     qr = RegionStatus.query.filter(and_(RegionStatus.region_id == region.id,

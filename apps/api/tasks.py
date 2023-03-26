@@ -1,11 +1,9 @@
-from datetime import datetime
-
 import requests
 from flask import current_app
 
 from apps.api.models import Region, RegionStatus, CallbackClient
 from apps.api.schemas import RegionStatusSchema
-from apps.api.services import get_or_create, render_alert_img, delete_cache
+from apps.api.services import get_or_create, render_alert_img, delete_cache, get_current_time
 from application import celery, db
 from scrapping import get_alerts_alerts_in_ua_selenium, get_alerts_vadimklimenko_statuses, get_alerts_alerts_com_ua_API, \
     get_alerts_ukrainealarm_com_API
@@ -63,7 +61,7 @@ def __update_data(data: []):
             RegionStatus.timestamp.desc()).first()
 
         if not last_status or last_status.is_alert != el['alert']:
-            status: RegionStatus = RegionStatus(region_id=region.id, is_alert=el['alert'], timestamp=datetime.utcnow())
+            status: RegionStatus = RegionStatus(region_id=region.id, is_alert=el['alert'], timestamp=get_current_time())
             db.session.add(status)
 
             if last_status:

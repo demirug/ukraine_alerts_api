@@ -1,16 +1,16 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import render_template
 from html2image import Html2Image
 from sqlalchemy import func, and_
 
-from apps.api.models import Region, RegionStatus
 from application import db, cache
 
 hti = Html2Image()
 
 
 def get_statuses():
+    from apps.api.models import RegionStatus
     stmt = db.session.query(RegionStatus.region_id.label('region_id'),
                             func.MAX(RegionStatus.timestamp).label('timestamp')).group_by(
         RegionStatus.region_id).subquery()
@@ -64,13 +64,17 @@ def parse_uint(data):
 
 
 def parse_bool(data: str) -> bool:
-
     if data == "True" or data == "true":
         return True
     elif data == "False" or data == "false":
         return False
     else:
         raise ValueError("Incorrect input data")
+
+
+def get_current_time():
+    """ Return datetime in UTC-0 """
+    return datetime.now(timezone.utc)
 
 
 def render_alert_img():
@@ -96,6 +100,7 @@ def get_or_create(model, create={}, **kwargs):
 
 
 def init_regions():
+    from apps.api.models import Region
     if Region.query.count() == 0:
         db.session.add_all([
             Region(id=1, name="Закарпатська", is_city=False),
