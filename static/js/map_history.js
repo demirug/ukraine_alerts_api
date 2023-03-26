@@ -28,6 +28,7 @@ function formatDuration(timestamp) {
 
 function formatTime(timestamp) {
     var date = new Date(timestamp);
+    date.setTime(date.getTime() - new Date().getTimezoneOffset() * 60 * 1000)
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
 }
 
