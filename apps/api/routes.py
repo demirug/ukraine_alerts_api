@@ -1,8 +1,9 @@
+import json
 import os
 from datetime import date
 from operator import and_
 
-from flask import request, make_response, render_template, send_file, current_app
+from flask import request, make_response, render_template, send_file, current_app, Response
 
 from application import cache
 from apps.api.controller import api_blpr as api
@@ -20,6 +21,14 @@ def regionList():
     """
 
     return RegionSchema(many=True).dump(Region.query.all())
+
+
+@api.route('/regions/static')
+@cache.cached(key_prefix="%s")
+def regionStaticList():
+    """ Return static regions id's """
+    data = json.dumps([reg.id for reg in Region.query.filter_by(static=True).all()])
+    return Response(data, mimetype='application/json')
 
 
 @api.route('/status')
@@ -68,7 +77,7 @@ def regionsHistory():
     limit = request.args.get('limit', default=1000, type=parse_uint)
 
     qr = RegionStatus.query.filter(
-            and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date))
+        and_(RegionStatus.timestamp >= from_date, RegionStatus.timestamp <= to_date))
 
     if not request.args.get('stable', default=True, type=parse_bool):
         qr = qr.filter_by(is_alert=True)

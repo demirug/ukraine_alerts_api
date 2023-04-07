@@ -25,6 +25,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Region'
+  /api/regions/static:
+    get:
+      tags:
+        - Regions
+      summary: Return all constant regions id`s
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: number
 
   /api/status:
     get:
