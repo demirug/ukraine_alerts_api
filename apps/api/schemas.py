@@ -6,7 +6,7 @@ from apps.api.models import Region, RegionStatus
 class RegionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Region
-        fields = ("id", "name", "is_city")
+        fields = ("id", "name", "is_city", "static")
 
 
 class RegionStatusSchema(SQLAlchemyAutoSchema):

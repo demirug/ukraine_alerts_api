@@ -227,6 +227,10 @@ components:
         is_city:
           type: boolean
           example: true
+        static:
+          type: boolean
+          example: true
+          description: Is the status of a region is constant
 
     Status:
       type: object
