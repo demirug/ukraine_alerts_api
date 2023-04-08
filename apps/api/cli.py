@@ -4,8 +4,8 @@ from flask import current_app
 from apps.api.controller import api_blpr
 from apps.api.models import Region, RegionStatus
 from application import db, cache
-from .services import render_alert_img
-from .tasks import inform_callback_clients
+from apps.api.services import init_regions, render_alert_img
+from apps.api.tasks import inform_callback_clients
 
 
 @api_blpr.cli.command("regions")
@@ -13,6 +13,12 @@ def region_list():
     print(f"Region count: {Region.query.count()}")
     for elm in Region.query.all():
         print(f"#{elm.id}. {elm.name}")
+
+
+@api_blpr.cli.command("load-defaults")
+def default_regions():
+    init_regions()
+    print("Default regions loaded")
 
 
 @api_blpr.cli.command("region")
