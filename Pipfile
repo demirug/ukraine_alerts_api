@@ -22,6 +22,8 @@ html2image = "*"
 swagger-ui-py = "*"
 gunicorn = "*"
 flask-caching = "*"
+coverage = "*"
+pytest = "*"
 
 [dev-packages]
 
